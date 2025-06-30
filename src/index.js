@@ -138,7 +138,7 @@ export default class RawTool {
 	 */
 	save(rawToolsWrapper) {
 		return {
-			html: rawToolsWrapper.querySelector('textarea').value,
+			html: rawToolsWrapper.querySelector('textarea').value.trim(),
 		};
 	}
 
@@ -184,8 +184,17 @@ export default class RawTool {
 		}
 	}
 
+	/**
+	 *
+	 * @param htmlContent {string}
+	 * @returns {boolean}
+	 */
 	isIframe(htmlContent) {
 		const range = document.createRange();
+
+		if (!htmlContent.trim().endsWith(">") || !htmlContent.trim().startsWith("<"))
+			return false;
+
 		try {
 			const fragment = range.createContextualFragment(htmlContent);
 			return fragment.childNodes.length === 1 && fragment.firstElementChild.nodeName === "IFRAME";
