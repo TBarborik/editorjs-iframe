@@ -190,17 +190,19 @@ export default class RawTool {
 	 * @returns {boolean}
 	 */
 	isIframe(htmlContent) {
+
+		return !(!htmlContent.trim().endsWith(">") || !htmlContent.trim().startsWith("<"));
+
+
+		/*
 		const range = document.createRange();
-
-		if (!htmlContent.trim().endsWith(">") || !htmlContent.trim().startsWith("<"))
-			return false;
-
 		try {
 			const fragment = range.createContextualFragment(htmlContent);
 			return fragment.childNodes.length === 1 && fragment.firstElementChild.nodeName === "IFRAME";
 		} catch (e) {
 			return false;
 		}
+		 */
 	}
 
 	/**
